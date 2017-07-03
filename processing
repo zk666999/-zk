@@ -1,0 +1,34 @@
+import processing.opengl.*;
+import processing.serial.*;
+
+Serial duankou;
+float data;
+float a;
+
+void setup(){
+  size(500,500,OPENGL);
+  String arduinoDuankou=Serial.list()[0];
+  duankou=new Serial(this, arduinoDuankou,9600);
+}
+
+void draw(){
+ background(230,221,158);
+ 
+ translate(250,150,-100);
+ lights();
+ if(duankou.available()>0){
+   data=duankou.read();
+   println(data);
+   a=map(data,0,255,0,2*PI);
+ }
+ rotateY(a);
+ fill(146,168,209);
+ sphere(140);
+ fill(136,176,75);
+ translate(0,100,0);
+ for(int i=0;i<30;i+=10){
+   translate(0,50,0);
+   box(300,40,300);
+   fill(247,202,209);
+ }
+}
